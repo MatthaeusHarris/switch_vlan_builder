@@ -1,0 +1,15 @@
+{% for vlan, name in vlans.items() %}
+vlan {{ vlan }}
+name {{ name }}
+{% endfor %}
+
+{% for port,config in ports.items() %}
+int {{ port }}
+{% if config['description'] != None %}desc {{ config['description'] }}{% else %}no desc{% endif %}{% if config['mode'] == 'access' %}
+switchport mode access
+switchport access vlan {{ config['vlans'][0] }}{% elif config['mode'] == 'trunk' %}
+switchport mode trunk
+switchport trunk allowed vlan none
+switchport trunk allowed vlan add {{ config['vlans']|join(',') }}{% endif %}
+exit
+{% endfor %}
