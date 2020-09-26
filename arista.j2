@@ -1,6 +1,7 @@
 {% for vlan, name in vlans.items() %}
 vlan {{ vlan }}
 name {{ name }}
+exit
 {% endfor %}
 
 {% for port,config in ports.items() %}
